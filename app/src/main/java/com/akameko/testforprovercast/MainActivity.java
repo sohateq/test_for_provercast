@@ -8,7 +8,9 @@ import android.widget.EditText;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.akameko.testforprovercast.database.AppDatabase;
 import com.akameko.testforprovercast.mainrecycler.MainAdapter;
 import com.akameko.testforprovercast.repository.pojos.Item;
 
@@ -25,12 +27,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     EditText editTextSearch;
     Button buttonSearch;
 
+    AppDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
         presenter.init();
+        initDb();
 
 
     }
@@ -42,7 +47,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
             presenter.search(editTextSearch.getText().toString());
         });
     }
-
+    @Override
     public void updateRecycler(List<Item> siteListItem) {
 
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
@@ -57,5 +62,31 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
         mainAdapter.notifyDataSetChanged();
 
+    }
+
+
+
+    private void initDb(){
+        db =  Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database")
+                .allowMainThreadQueries()
+                .build();
+        List<Item> siteListItem = db.getItemDao().getAllItems();
+        if (siteListItem != null){
+            updateRecycler(siteListItem);
+        }
+
+    }
+
+    @Override
+    public void updateDatabase(List<Item> siteListItem) {
+        db.getItemDao().deleteAll();
+        db.getItemDao().insertAll(siteListItem);
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.destroy();
+        super.onDestroy();
     }
 }

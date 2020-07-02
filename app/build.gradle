@@ -49,4 +49,9 @@ dependencies {
     implementation "com.github.moxy-community:moxy:2.0.2"
     annotationProcessor "com.github.moxy-community:moxy-compiler:2.0.2"
     implementation "com.github.moxy-community:moxy-androidx:2.0.2"
+
+    def room_version = "2.2.5"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

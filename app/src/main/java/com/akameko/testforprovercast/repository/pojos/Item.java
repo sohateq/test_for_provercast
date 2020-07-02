@@ -1,9 +1,14 @@
 package com.akameko.testforprovercast.repository.pojos;
 
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Item {
 
     @SerializedName("kind")
@@ -11,6 +16,8 @@ public class Item {
     private String kind;
     @SerializedName("title")
     @Expose
+    @PrimaryKey
+    @NonNull
     private String title;
     @SerializedName("htmlTitle")
     @Expose
@@ -36,9 +43,9 @@ public class Item {
     @SerializedName("htmlFormattedUrl")
     @Expose
     private String htmlFormattedUrl;
-    @SerializedName("pagemap")
-    @Expose
-    private Pagemap pagemap;
+//    @SerializedName("pagemap")
+//    @Expose
+//    private Pagemap pagemap;
 
     public String getKind() {
         return kind;
@@ -120,13 +127,13 @@ public class Item {
         this.htmlFormattedUrl = htmlFormattedUrl;
     }
 
-    public Pagemap getPagemap() {
-        return pagemap;
-    }
-
-    public void setPagemap(Pagemap pagemap) {
-        this.pagemap = pagemap;
-    }
+//    public Pagemap getPagemap() {
+//        return pagemap;
+//    }
+//
+//    public void setPagemap(Pagemap pagemap) {
+//        this.pagemap = pagemap;
+//    }
 
     @Override
     public String toString() {
@@ -141,7 +148,7 @@ public class Item {
                 ", cacheId='" + cacheId + '\'' +
                 ", formattedUrl='" + formattedUrl + '\'' +
                 ", htmlFormattedUrl='" + htmlFormattedUrl + '\'' +
-                ", pagemap=" + pagemap +
+               // ", pagemap=" + pagemap +
                 '}';
     }
 }
