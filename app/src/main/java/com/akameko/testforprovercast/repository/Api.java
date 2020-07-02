@@ -1,13 +1,9 @@
 package com.akameko.testforprovercast.repository;
 
-import com.akameko.testforprovercast.repository.pogos.GoogleSearch;
-import com.akameko.testforprovercast.repository.pogos.Item;
-
-import java.util.List;
+import com.akameko.testforprovercast.repository.pojos.GoogleSearch;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Api {

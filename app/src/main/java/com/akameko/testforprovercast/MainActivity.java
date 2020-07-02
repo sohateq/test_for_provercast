@@ -1,36 +1,61 @@
 package com.akameko.testforprovercast;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.akameko.testforprovercast.repository.Repository;
+import com.akameko.testforprovercast.mainrecycler.MainAdapter;
+import com.akameko.testforprovercast.repository.pojos.Item;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import moxy.MvpAppCompatActivity;
+import moxy.presenter.InjectPresenter;
 
-    private Repository repository = new Repository();
+public class MainActivity extends MvpAppCompatActivity implements MainView {
+
+    @InjectPresenter
+    MainPresenter presenter;
+
+    EditText editTextSearch;
+    Button buttonSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Disposable disposable = repository.getResults("lalala")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-
-                    Log.d("123", result.getItems().get(0).toString());
-                    Log.d("123", "Companies loaded!!");
+        initViews();
+        presenter.init();
 
 
-                }, throwable -> {
-                    Log.d("123", "Companies loading failed", throwable);
-                    //Toast.makeText(this,"load error", Toast.LENGTH_SHORT).show();
-                });
+    }
+
+    private void initViews(){
+        editTextSearch = findViewById(R.id.edit_text_site_search);
+        buttonSearch = findViewById(R.id.button);
+        buttonSearch.setOnClickListener(v -> {
+            presenter.search(editTextSearch.getText().toString());
+        });
+    }
+
+    public void updateRecycler(List<Item> siteListItem) {
+
+        RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        MainAdapter mainAdapter = new MainAdapter(siteListItem);
+        recyclerView.setAdapter(mainAdapter);
+
+        mainAdapter.notifyDataSetChanged();
+
     }
 }

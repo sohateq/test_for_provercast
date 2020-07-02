@@ -1,9 +1,9 @@
 package com.akameko.testforprovercast.repository;
 
-import com.akameko.testforprovercast.repository.pogos.GoogleSearch;
-import com.akameko.testforprovercast.repository.pogos.Item;
 
-import java.util.List;
+
+
+import com.akameko.testforprovercast.repository.pojos.GoogleSearch;
 
 import io.reactivex.Single;
 import retrofit2.Retrofit;
@@ -24,13 +24,9 @@ public class Repository {
     }
 
 
-
-
     public Single<GoogleSearch> getResults(String request) {
         return api.getResults(request);
     }
 
-//public Single<GoogleSearch> getResults(String request) {
-//    return api.getResults();
-//}
+
 }

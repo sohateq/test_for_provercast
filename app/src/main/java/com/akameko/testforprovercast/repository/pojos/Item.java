@@ -1,4 +1,4 @@
-package com.akameko.testforprovercast.repository.pogos;
+package com.akameko.testforprovercast.repository.pojos;
 
 
 import com.google.gson.annotations.Expose;
