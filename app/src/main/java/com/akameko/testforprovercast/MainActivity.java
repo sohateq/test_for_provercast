@@ -67,14 +67,14 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
 
     private void initDb(){
-        db =  Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database")
-                .allowMainThreadQueries()
-                .build();
-        List<Item> siteListItem = db.getItemDao().getAllItems();
-        if (siteListItem != null){
-            updateRecycler(siteListItem);
-        }
+//        db =  Room.databaseBuilder(getApplicationContext(),
+//                AppDatabase.class, "database")
+//                .allowMainThreadQueries()
+//                .build();
+//        List<Item> siteListItem = db.getItemDao().getAllItems();
+//        if (siteListItem != null){
+//            updateRecycler(siteListItem);
+//        }
 
     }
 
